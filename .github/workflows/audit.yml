@@ -1,0 +1,32 @@
+name: audit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      # brew style and brew audit take a tap name, so the checkout is linked
+      # where Homebrew keeps the tap shin315/tap.
+      - name: Make the checkout the tap shin315/tap
+        run: |
+          taps="$(brew --repository)/Library/Taps/shin315"
+          mkdir -p "$taps"
+          ln -s "$GITHUB_WORKSPACE" "$taps/homebrew-tap"
+
+      - name: brew style
+        run: brew style shin315/tap
+
+      - name: brew audit
+        run: brew audit --cask --strict --online shin315/tap/quota-station
