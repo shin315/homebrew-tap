@@ -18,12 +18,14 @@ jobs:
           persist-credentials: false
 
       # brew style and brew audit take a tap name, so the checkout is linked
-      # where Homebrew keeps the tap shin315/tap.
+      # where Homebrew keeps the tap shin315/tap, and trusted, since Homebrew
+      # refuses to load a cask from an untrusted tap.
       - name: Make the checkout the tap shin315/tap
         run: |
           taps="$(brew --repository)/Library/Taps/shin315"
           mkdir -p "$taps"
           ln -s "$GITHUB_WORKSPACE" "$taps/homebrew-tap"
+          brew trust shin315/tap
 
       - name: brew style
         run: brew style shin315/tap
