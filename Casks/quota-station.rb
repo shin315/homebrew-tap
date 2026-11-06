@@ -1,6 +1,6 @@
 cask "quota-station" do
-  version "1.1.1"
-  sha256 "bc46d70ca173e95da3a573283c56a4d906d30a84fc4f881efc5f7a408a4c4718"
+  version "1.2.0"
+  sha256 "bb3c10b525f8a143c1b94ff84444a3d3fe8691f23b12357622c7c71068516392"
 
   url "https://github.com/shin315/quota-station/releases/download/v#{version}/Quota.Station_#{version}_universal.dmg"
   name "Quota Station"
